@@ -1,0 +1,10 @@
+# IDE
+.idea/
+*.iml
+
+# System
+.DS_Store
+
+# Build
+*/target/
+*.log
