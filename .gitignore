@@ -8,3 +8,9 @@
 # Build
 */target/
 *.log
+
+# Environment variables (keep secrets out of git)
+.env
+*.env
+application.properties
+application-*.properties
