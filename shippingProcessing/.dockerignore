@@ -1,0 +1,15 @@
+# Maven build output
+target/
+!target/*.jar
+
+.idea/
+.vscode/
+*.iml
+*.class
+*.log
+*.DS_Store
+Thumbs.db
+
+# Git repo (not needed inside container)
+.git
+.gitignore
