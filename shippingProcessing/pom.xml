@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.event</groupId>
-	<artifactId>orderProcessing</artifactId>
+	<artifactId>shippingProcessing</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>orderProcessing</name>
+	<name>shippingProcessing</name>
 	<description>Project for event Driven processing of Orders in e-commerce organization</description>
 	<url/>
 	<licenses>
@@ -66,12 +66,10 @@
 		<dependency>
     		<groupId>org.springframework.kafka</groupId>
     		<artifactId>spring-kafka</artifactId>
-    		<version>3.1.4</version>
 		</dependency>
 		<dependency>
     		<groupId>org.springframework.kafka</groupId>
     		<artifactId>spring-kafka-test</artifactId>
-    		<version>3.1.4</version>
     		<scope>test</scope>
 		</dependency>
 		<dependency>
