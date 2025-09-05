@@ -1,0 +1,100 @@
+version: '3.9'
+services:
+  # MYSQL
+  mysql:
+    image : mysql:8
+    container_name : mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MY_SQL_PASSWORD}
+    ports : 
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+
+  #zookeeper
+  zookeeper:
+      image: confluentinc/cp-zookeeper:7.5.0
+      container_name : zookeeper
+      environment :
+        ZOOKEEPER_CLIENT_PORT : 2181
+        ZOOKEEPER_TICK_TIME : 2000
+      ports:
+        - "2181:2181"
+
+  #kafka
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka-broker
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID : 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+    
+  #Spring
+
+  #1: Inventory Processing Service
+  inventory:
+    build: ../inventoryProcessing
+    container_name: inventoryProcessingApp
+    depends_on:
+      - mysql
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL : jdbc:mysql://mysql:3306/inventorydb
+      SPRING_DATASOURCE_USERNAME : ${MY_SQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD : ${MY_SQL_PASSWORD}
+    ports:
+      - "8081:8080"
+  
+  #2: Order Processing Service
+  order:
+    build: ../orderProcessing
+    container_name: orderProcessingApp
+    depends_on:
+      - mysql
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL : jdbc:mysql://mysql:3306/orderdb
+      SPRING_DATASOURCE_USERNAME : ${MY_SQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD : ${MY_SQL_PASSWORD}
+    ports:
+      - "8082:8080"
+
+  #3: Payment Processing Service 
+  payment:
+    build: ../paymentProcessing
+    container_name: paymentProcessingApp
+    depends_on:
+      - mysql
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL : jdbc:mysql://mysql:3306/paymentdb
+      SPRING_DATASOURCE_USERNAME : ${MY_SQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD : ${MY_SQL_PASSWORD} 
+    ports:
+      - "8083:8080"
+
+  #4: Shipment Process Service
+  shipping:
+    build : ../shippingProcessing
+    container_name: shippingProcessingApp
+    depends_on:
+      - mysql
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL : jdbc:mysql://mysql:3306/shippingdb
+      SPRING_DATASOURCE_USERNAME : ${MY_SQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD : ${MY_SQL_PASSWORD} 
+    ports:
+      - "8084:8080"
+
+#Volumes:
+volumes:
+    mysql-data:
