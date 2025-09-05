@@ -1,6 +1,10 @@
 # IDE
 .idea/
 *.iml
+.vscode/
+.classpath
+.project
+.settings/
 
 # System
 .DS_Store
@@ -8,6 +12,10 @@
 # Build
 */target/
 *.log
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+mvnw
+mvnw.cmd
 
 # Environment variables (keep secrets out of git)
 .env
