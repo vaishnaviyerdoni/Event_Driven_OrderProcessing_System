@@ -22,6 +22,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
 
+    private Integer itemID;
+
     
 
 }
