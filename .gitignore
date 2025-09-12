@@ -22,3 +22,7 @@ mvnw.cmd
 *.env
 application.properties
 application-*.properties
+
+# Spring Boot generated metadata
+**/META-INF/spring-configuration-metadata.json
+**/META-INF/additional-spring-configuration-metadata.json
