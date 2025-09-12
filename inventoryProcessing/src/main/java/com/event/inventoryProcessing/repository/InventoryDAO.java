@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.event.inventoryProcessing.model.Inventory;
 
 public interface InventoryDAO extends JpaRepository<Inventory, Integer>{
+    
     @SuppressWarnings("null")
     List<Inventory> findAll(); // returns list of inventory items
 
