@@ -1,19 +1,15 @@
 package com.event.orderProcessing.model;
 
 import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @ToString @Entity
 public class Order {
@@ -31,4 +27,14 @@ public class Order {
 
     @Column(name="totalAmount", nullable = false)
     private Double totalAmount;
+
+    public Order() {
+
+    }
+
+    public Order(LocalDate orderDate, String orderStatus, Double totalAmount) {
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.totalAmount = totalAmount;
+    }
 }

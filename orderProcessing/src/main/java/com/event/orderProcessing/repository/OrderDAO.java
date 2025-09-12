@@ -15,7 +15,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer>{
     Order findById(int orderId); //returns the order by its orderId
 
     @Query("SELECT O FROM Order O WHERE O.orderStatus = ?1")
-    List<Order> findByOrderStatus(String orderStatus); //returns orders by their status
+    List<Order> findByOrderStatus(String orderStatus); //returns orders by their  status
 
     Double findPriceByOrderId(int orderId); 
 }
