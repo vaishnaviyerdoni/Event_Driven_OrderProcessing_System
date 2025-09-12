@@ -3,6 +3,7 @@ package com.event.inventoryProcessing.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,12 +19,19 @@ import lombok.ToString;
 public class Inventory {
     
     @Id
-    @GeneratedValue
-    private Integer itemid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="itemId")
+    private Integer itemId;
 
-    @Column(nullable = false)
-    private String itemName;
+    @Column(name="itemname", nullable = false)
+    private String itemname;
 
-    @Column(nullable = false)
+    @Column(name="category", nullable = false)
+    private String category;
+
+    @Column(name="price", nullable = false)
+    private double price;
+
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 }
