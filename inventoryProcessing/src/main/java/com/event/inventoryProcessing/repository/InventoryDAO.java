@@ -11,7 +11,7 @@ public interface InventoryDAO extends JpaRepository<Inventory, Integer>{
 
     Inventory findById(int itemId); // returns an inventory item by its id
 
-    Inventory findByCategory(String category); //returns an item by its category
+    List<Inventory> findByCategory(String category); //returns an items by their category
 
     Double findPriceByItemname(String itemname); //return item price by the item name
 }
