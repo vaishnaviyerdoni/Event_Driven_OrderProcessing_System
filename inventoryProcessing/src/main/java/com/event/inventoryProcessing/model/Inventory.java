@@ -31,14 +31,18 @@ public class Inventory {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
+    @Column(name="LowStockThreshold", nullable = false)
+    private int LowStockThreshold;
+
     public Inventory() {
 
     }
 
-    public Inventory(String itemname, String category, Double price, int quantity) {
+    public Inventory(String itemname, String category, Double price, int quantity, int LowStockThreshold) {
         this.itemname = itemname;
         this.category = category;
         this.price = price;
         this.quantity = quantity;
+        this.LowStockThreshold = LowStockThreshold;
     }
 }
