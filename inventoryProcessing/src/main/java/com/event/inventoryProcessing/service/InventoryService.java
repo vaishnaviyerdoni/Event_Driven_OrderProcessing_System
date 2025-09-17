@@ -88,19 +88,35 @@ public class InventoryService {
         }
     }
 
+    //To check if inventory has enough stock
+    public boolean isAvailable(int itemId) {
+        try{
+            Inventory item = inventoryDAO.findById(itemId);
+            if(item.getQuantity() >  item.getLowStockThreshold()) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     //Update method - To update the quantity of Item
     public boolean updateStock(int itemId, int newQuantity) {
         try{
             Inventory item = inventoryDAO.findById(itemId);
-            int quantity = item.getQuantity();
-            int LowStockThreshold = item.getLowStockThreshold();
-            if(quantity < LowStockThreshold) {
+            
+            if(!isAvailable(itemId)) {
                 item.setQuantity(newQuantity);
                 inventoryDAO.save(item);
                 return true;
             }
             else{
-                throw new ItemNotFoundException("The inventory has enough stock for this item!");
+                throw new ItemNotFoundException("Stock is available for this item");
             }
         }
         catch(Exception e){
