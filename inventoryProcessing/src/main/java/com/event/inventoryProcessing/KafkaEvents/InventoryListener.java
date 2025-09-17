@@ -14,11 +14,14 @@ public class InventoryListener {
     
     //this method listens message from Order, verifies the inventory and call Publisher
     //Passes Event String to publisher
-    @KafkaListener(topics = "inventory", groupId = "inventoryProcessing")
+    @KafkaListener(topics = "${general.order.kafka-topic}", groupId = "inventoryProcessing")
 
     public void consumeOrder(String message) {
 
+        System.out.println("Event received from OrderPublisher: " + message);
+
         if(message.equals("OrderPlaced")) {
+            
             
             publisher.sendInventoryMessage("InventoryReserved");
         }
