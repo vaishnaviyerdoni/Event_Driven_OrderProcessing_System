@@ -2,6 +2,7 @@ package com.event.inventoryProcessing.KafkaEvents;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import com.event.shared_events.dto.OrderItem;
 
 @Component
 public class InventoryListener {
@@ -22,7 +23,8 @@ public class InventoryListener {
 
         if(message.equals("OrderPlaced")) {
             
-            
+            OrderItem item = new OrderItem();
+            item.getItemId();
             publisher.sendInventoryMessage("InventoryReserved");
         }
         else{
