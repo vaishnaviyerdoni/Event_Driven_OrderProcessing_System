@@ -11,6 +11,7 @@ public class InventoryEvent {
     private String inventoryStatus; //InventoryReserved Or InventoryFailed depending on stock
     private String orderStatus; //Order status by default is pending
     private List<OrderItem> items; //List containing Order items details
+    private Double totalAmount; //total amount of an order
 
     public InventoryEvent() {
 
