@@ -37,6 +37,7 @@ public class InventoryListener { // Listens from OrderPublisher
                 event.setInventoryStatus("InventoryReserved");
                 event.setOrderStatus("Pending");
                 event.setItems(items);
+                event.setTotalAmount(order.getTotalAmount());
 
                 publisher.sendInventoryMessage("InventoryReserved", event);
             }
@@ -45,6 +46,7 @@ public class InventoryListener { // Listens from OrderPublisher
                 event.setInventoryStatus("InventoryFailed");
                 event.setOrderStatus("Pending");
                 event.setItems(items);
+                event.setTotalAmount(order.getTotalAmount());
 
                 publisher.sendInventoryMessage("InventoryFailed", event);
             }
