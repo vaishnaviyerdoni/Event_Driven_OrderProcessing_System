@@ -28,13 +28,17 @@ public class Order {
     @Column(name="totalAmount", nullable = false)
     private Double totalAmount;
 
+    @Column(name= "address", nullable = false)
+    private String address;
+    
     public Order() {
 
     }
 
-    public Order(LocalDate orderDate, String orderStatus, Double totalAmount) {
+    public Order(LocalDate orderDate, String orderStatus, Double totalAmount, String address) {
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.totalAmount = totalAmount;
+        this.address = address;
     }
 }

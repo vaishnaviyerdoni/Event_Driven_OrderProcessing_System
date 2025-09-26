@@ -24,8 +24,9 @@ public class OrderService {
             LocalDate orderDate = order.getOrderDate();
             String orderStatus = order.getOrderStatus();
             Double totalAmount = order.getTotalAmount();
+            String address = order.getAddress();
 
-            Order myOrder = new Order(orderDate, orderStatus, totalAmount);
+            Order myOrder = new Order(orderDate, orderStatus, totalAmount, address);
             Order newOrder = orderDAO.save(myOrder);
             return newOrder.getOrderId();
         }
