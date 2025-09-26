@@ -16,4 +16,5 @@ public class PaymentEvent {
     private Double amount;
     private String orderStatus;
     private String paymentStatus;
+    private String address;
 }
