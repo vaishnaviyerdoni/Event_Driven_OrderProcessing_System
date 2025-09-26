@@ -13,10 +13,10 @@ public class InventoryPublisher { //Publishes event to PaymentListener
         this.kafkaTemp = kafkaTemp;
     }
 
-    public void sendInventoryMessage(String message, InventoryEvent event) {
+    public void sendInventoryMessage(InventoryEvent event) {
         try{
-            kafkaTemp.send(message, event);
-            System.out.println("Message Received From Listener: " + message); //message == InventoryReserved OR InventoryFailed
+            kafkaTemp.send(event.getInventoryStatus(), event);
+            System.out.println("Message Received From Listener: " + event.getInventoryStatus()); //message == InventoryReserved OR InventoryFailed
         }
         catch(Exception e) {
             e.printStackTrace();

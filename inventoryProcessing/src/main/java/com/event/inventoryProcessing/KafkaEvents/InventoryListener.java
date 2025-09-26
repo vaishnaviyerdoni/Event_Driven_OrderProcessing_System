@@ -21,35 +21,26 @@ public class InventoryListener { // Listens from OrderPublisher
     //Passes Event String to publisher
     @KafkaListener(topics = "${general.order.kafka-topic}", groupId = "inventoryProcessing")
 
-    public void consumeOrder(String message, OrderPlaced order) {
+    public void consumeOrder(OrderPlaced order) {
 
-        System.out.println("Event received from OrderPublisher: " + message);
-
-        if(message.equals("OrderPlaced")) {
-            
-           List<OrderItem> items = order.getItems();
-           boolean isAvailable = items.stream().allMatch(item -> service.isAvailable(item.getItemId()));
+        System.out.println("Event received from OrderPublisher for orderId: " + order.getOrderId()); 
+        List<OrderItem> items = order.getItems();
+        boolean isAvailable = items.stream().allMatch(item -> service.isAvailable(item.getItemId()));
            
-            InventoryEvent event = new InventoryEvent();
+        InventoryEvent event = new InventoryEvent();
 
-            if(isAvailable){
-                event.setOrderId(order.getOrderId());
-                event.setInventoryStatus("InventoryReserved");
-                event.setOrderStatus("Pending");
-                event.setItems(items);
-                event.setTotalAmount(order.getTotalAmount());
+        event.setOrderId(order.getOrderId());
+        event.setOrderStatus("Pending");
+        event.setItems(items);
+        event.setTotalAmount(order.getTotalAmount());
 
-                publisher.sendInventoryMessage("InventoryReserved", event);
-            }
-            else{
-                event.setOrderId(order.getOrderId());
-                event.setInventoryStatus("InventoryFailed");
-                event.setOrderStatus("Pending");
-                event.setItems(items);
-                event.setTotalAmount(order.getTotalAmount());
-
-                publisher.sendInventoryMessage("InventoryFailed", event);
-            }
+        if(isAvailable){
+            event.setInventoryStatus("InventoryReserved");
+            publisher.sendInventoryMessage(event);
+        }
+        else{
+            event.setInventoryStatus("InventoryFailed");
+            publisher.sendInventoryMessage(event);
         }
     }
 }
