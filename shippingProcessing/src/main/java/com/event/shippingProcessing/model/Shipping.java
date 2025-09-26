@@ -24,7 +24,7 @@ public class Shipping {
 
     @Column(name="orderStatus", nullable = false)
     private String  orderStatus;
-
+   
     public Shipping() {
 
     }
