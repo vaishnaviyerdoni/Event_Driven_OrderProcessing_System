@@ -33,6 +33,7 @@ public class InventoryListener { // Listens from OrderPublisher
         event.setOrderStatus("Pending");
         event.setItems(items);
         event.setTotalAmount(order.getTotalAmount());
+        event.setAddress(order.getAddress());
 
         if(isAvailable){
             event.setInventoryStatus("InventoryReserved");
