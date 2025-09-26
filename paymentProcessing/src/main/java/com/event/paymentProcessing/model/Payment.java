@@ -27,12 +27,16 @@ public class Payment {
     @Column(name="orderStatus", nullable = false)
     private String orderStatus;
 
+    @Column(name="address", nullable = false)
+    private String address;
+
     public Payment() {
 
     }
 
-    public Payment(Double amount, String orderStatus) {
+    public Payment(Double amount, String orderStatus, String address) {
         this.amount = amount;
         this.orderStatus = orderStatus;
+        this.address = address;
     }
 }

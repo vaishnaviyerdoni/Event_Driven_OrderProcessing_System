@@ -20,7 +20,7 @@ public class PaymentListener {
     @KafkaListener(topics = "${general.inventory.kafka-topic}", groupId = "paymentProcessing")
     public void consumeInventory(InventoryEvent event){
 
-        MakePayment payment =  new MakePayment(event.getTotalAmount(), event.getOrderStatus());
+        MakePayment payment =  new MakePayment(event.getTotalAmount(), event.getOrderStatus(), event.getAddress());
         PaymentEvent payEvent = new PaymentEvent();
 
         payEvent.setAmount(event.getTotalAmount());

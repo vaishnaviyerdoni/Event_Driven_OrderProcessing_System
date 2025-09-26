@@ -22,8 +22,9 @@ public class PaymentService {
         try{
             Double amt = payment.getAmount();
             String status = payment.getOrderStatus();
+            String address = payment.getAddress();
 
-            Payment pay = new Payment(amt, status);
+            Payment pay = new Payment(amt, status, address);
             Payment newPay = paymentDAO.save(pay);
             return newPay.getPaymentId();
         }
