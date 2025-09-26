@@ -13,8 +13,8 @@ public class OrderPublisher { // Publishes event to InventoryListener
         this.kafkaTemp = kafkaTemp;
     }
 
-    public void placeOrder(String message, OrderPlaced order) {
+    public void placeOrder(OrderPlaced order) {
         kafkaTemp.send("OrderPlaced", order);
-        System.out.println("Message Received:" + message);
+        System.out.println("Order sent for order: " + order.getOrderId());
     }
 }
