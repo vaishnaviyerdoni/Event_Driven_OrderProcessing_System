@@ -1,7 +1,6 @@
-package com.event.shared_events;
+package com.event.shared_events.dto;
 
 import java.util.List;
-import com.event.shared_events.dto.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +15,6 @@ public class ShippingDetails {
     private List<OrderItem> items;
     private Double amount;
     private String orderStatus;
-    private String paymentStatus;
+    private String shippingStatus;
+    private String address;
 }
