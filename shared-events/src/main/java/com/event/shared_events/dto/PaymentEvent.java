@@ -15,4 +15,5 @@ public class PaymentEvent {
     private List<OrderItem> items;
     private Double amount;
     private String orderStatus;
+    private String paymentStatus;
 }
