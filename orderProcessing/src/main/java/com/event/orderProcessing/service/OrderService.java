@@ -6,16 +6,20 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.event.orderProcessing.DTO.AddOrder;
 import com.event.orderProcessing.Exception.OrderNotFoundException;
+import com.event.orderProcessing.KafkaEvents.OrderPublisher;
 import com.event.orderProcessing.model.Order;
 import com.event.orderProcessing.repository.OrderDAO;
+import com.event.shared_events.dto.*;
 
 @Service
 public class OrderService {
     
     private OrderDAO orderDAO;
+    private OrderPublisher publisher;
 
-    public OrderService(OrderDAO orderDAO) {
+    public OrderService(OrderDAO orderDAO, OrderPublisher publisher) {
         this.orderDAO = orderDAO;
+        this.publisher = publisher;
     }
 
     //POST method : To place an Order
@@ -28,6 +32,11 @@ public class OrderService {
 
             Order myOrder = new Order(orderDate, orderStatus, totalAmount, address);
             Order newOrder = orderDAO.save(myOrder);
+
+            //Publishing Kafka Event
+            OrderPlaced event = new OrderPlaced(newOrder.getOrderId(), newOrder.getItems() ,newOrder.getOrderStatus(), newOrder.getTotalAmount(), newOrder.getAddress());
+            publisher.placeOrder(event);
+
             return newOrder.getOrderId();
         }
         catch(Exception e){

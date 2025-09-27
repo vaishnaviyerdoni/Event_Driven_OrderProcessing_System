@@ -1,6 +1,8 @@
 package com.event.orderProcessing.model;
 
 import java.time.LocalDate;
+import java.util.List;
+import com.event.shared_events.dto.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +32,8 @@ public class Order {
 
     @Column(name= "address", nullable = false)
     private String address;
+
+    private List<OrderItem> items;
     
     public Order() {
 
