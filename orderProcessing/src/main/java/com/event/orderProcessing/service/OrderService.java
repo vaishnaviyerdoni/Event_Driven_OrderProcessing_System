@@ -1,6 +1,7 @@
 package com.event.orderProcessing.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import com.event.orderProcessing.DTO.AddOrder;
 import com.event.orderProcessing.Exception.OrderNotFoundException;
 import com.event.orderProcessing.KafkaEvents.OrderPublisher;
 import com.event.orderProcessing.model.Order;
+import com.event.orderProcessing.model.OrderItemEntity;
 import com.event.orderProcessing.repository.OrderDAO;
 import com.event.shared_events.dto.*;
 
@@ -33,8 +35,18 @@ public class OrderService {
             Order myOrder = new Order(orderDate, orderStatus, totalAmount, address);
             Order newOrder = orderDAO.save(myOrder);
 
+            OrderItemEntity entity = new OrderItemEntity();
+            OrderItem item = new OrderItem(newOrder.getOrderId(), entity.getItemId(), entity.getQuantity());
+            List<OrderItem> items = new ArrayList<>();
+            items.add(item);
+
+
             //Publishing Kafka Event
-            OrderPlaced event = new OrderPlaced(newOrder.getOrderId(), newOrder.getItems() ,newOrder.getOrderStatus(), newOrder.getTotalAmount(), newOrder.getAddress());
+            OrderPlaced event = new OrderPlaced(newOrder.getOrderId(), 
+                                                items, 
+                                                newOrder.getOrderStatus(), 
+                                                newOrder.getTotalAmount(), 
+                                                newOrder.getAddress());
             publisher.placeOrder(event);
 
             return newOrder.getOrderId();
