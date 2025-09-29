@@ -9,10 +9,11 @@ import lombok.*;
 public class OrderItemEntity {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column()
+    @Column(name="id")
     private Integer id;
 
-    @JoinColumn(name="orderId")
+    @JoinColumn(name="orderId", nullable = false)
+    @ManyToMany
     private Order order;
 
     @Column(name = "itemId", nullable = false)
