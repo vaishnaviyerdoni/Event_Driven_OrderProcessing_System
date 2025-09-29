@@ -2,7 +2,6 @@ package com.event.orderProcessing.model;
 
 import java.time.LocalDate;
 import java.util.List;
-import com.event.shared_events.dto.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,10 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @Setter
+@Setter @Getter
 @ToString @Entity
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="orderId")
@@ -33,7 +31,7 @@ public class Order {
     @Column(name= "address", nullable = false)
     private String address;
 
-    private List<OrderItem> items;
+    private List<OrderItemEntity> items;
     
     public Order() {
 
@@ -44,5 +42,9 @@ public class Order {
         this.orderStatus = orderStatus;
         this.totalAmount = totalAmount;
         this.address = address;
+    }
+
+    public List<OrderItemEntity> getEntityItems(){
+        return items;
     }
 }
