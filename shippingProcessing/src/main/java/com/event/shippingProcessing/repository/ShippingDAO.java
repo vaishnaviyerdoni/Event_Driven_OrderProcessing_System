@@ -1,7 +1,6 @@
 package com.event.shippingProcessing.repository;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.event.shippingProcessing.model.Shipping;
 
