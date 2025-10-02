@@ -1,7 +1,5 @@
 package com.event.inventoryProcessing.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-
 import com.event.inventoryProcessing.DTO.AddItem;
 import com.event.inventoryProcessing.DTO.AddItemRes;
 import com.event.inventoryProcessing.Exceptions.ItemNotFoundException;
@@ -9,11 +7,8 @@ import com.event.inventoryProcessing.model.Inventory;
 import com.event.inventoryProcessing.service.InventoryService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
 
 @RequestMapping("/event")
 @RestController
@@ -59,7 +54,7 @@ public class InventoryController {
         }
     }
     
-    @GetMapping("/inventory/{itemId}")
+    @GetMapping("/inventory/{itemId}") //To get price of an item
     public Double getPrice(@PathVariable int itemId) throws ItemNotFoundException {
         Double price = inventoryService.getPricebyId(itemId);
         if(price != null) {
@@ -70,7 +65,7 @@ public class InventoryController {
         }
     }
 
-    @PostMapping("/inventory")
+    @PostMapping("/inventory") //To add new Item (Admin task)
     public ResponseEntity<AddItemRes> postMethodName(@RequestBody AddItem item) throws Exception {
         Integer itemId = inventoryService.addItem(item);
         if (itemId > 0){
@@ -82,5 +77,36 @@ public class InventoryController {
         }
     }
     
-    
+    @PutMapping("/inventory/{itemId}")
+    public ResponseEntity<String> updateStock(@PathVariable Integer itemId, @RequestParam int quantity) {
+        Boolean isUpdated = inventoryService.updateStock(itemId, quantity);
+        if(isUpdated) {
+            return ResponseEntity.ok("Stock Updated Successfully");
+        }
+        else{
+            return ResponseEntity.ok("Failed to update Stock, try again later");
+        }
+    }
+
+    @PutMapping("/inventory/{itemId}")
+    public ResponseEntity<String> updatePrice(@PathVariable Integer itemId, @RequestParam Double price) {
+        Boolean isUpdated = inventoryService.updatePrice(itemId, price);
+        if(isUpdated){
+            return ResponseEntity.ok("Price Updated Successfully");
+        }
+        else{
+            return ResponseEntity.ok("Failed to update Price");
+        }
+    }
+
+    @DeleteMapping("/inventory/{itemId}")
+    public ResponseEntity<String> deleteItem(@PathVariable Integer itemId) {
+        Boolean isDeleted = inventoryService.deleteItem(itemId);
+        if(isDeleted) {
+            return ResponseEntity.ok("Delete Item");
+        }
+        else{
+            return ResponseEntity.ok("Couldn't not delete item.");
+        }
+    }
 }

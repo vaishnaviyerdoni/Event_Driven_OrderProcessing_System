@@ -142,6 +142,22 @@ public class InventoryService {
         }
     }
 
+    //Update method - To update Price of quantity
+    public boolean updatePrice(int itemId, Double newPrice) {
+        try{
+            Inventory item = inventoryDAO.findById(itemId);
+
+            item.setPrice(newPrice);
+            inventoryDAO.save(item);
+
+            return true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     //DELETE method - To delete item from inventory
     public boolean deleteItem(int itemId) {
         try{
