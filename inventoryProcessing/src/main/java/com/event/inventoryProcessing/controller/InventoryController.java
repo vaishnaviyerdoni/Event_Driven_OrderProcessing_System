@@ -23,7 +23,7 @@ public class InventoryController {
     @GetMapping("/inventory") //To get a list of all Items
     public ResponseEntity<List<Inventory>> getAll() throws ItemNotFoundException {
         List<Inventory> items = inventoryService.getAllItems();
-        if(items.isEmpty()) {
+        if(items != null) {
             return ResponseEntity.ok(items);
         }
         else{
@@ -31,10 +31,10 @@ public class InventoryController {
         }
     }
 
-    @GetMapping("/inventory/{category}")
+    @GetMapping("/inventory/{category}")//To get All items by category
     public ResponseEntity<List<Inventory>> getByCategory(@PathVariable String category) throws ItemNotFoundException {
         List<Inventory> items = inventoryService.getbyCategory(category);
-        if(items.isEmpty()) {
+        if(items != null) {
             return ResponseEntity.ok(items);
         }
         else{
@@ -77,7 +77,7 @@ public class InventoryController {
         }
     }
     
-    @PutMapping("/inventory/{itemId}")
+    @PutMapping("/inventory/{itemId}")//To update Item stock(Admin task)
     public ResponseEntity<String> updateStock(@PathVariable Integer itemId, @RequestParam int quantity) {
         Boolean isUpdated = inventoryService.updateStock(itemId, quantity);
         if(isUpdated) {
@@ -88,7 +88,7 @@ public class InventoryController {
         }
     }
 
-    @PutMapping("/inventory/{itemId}")
+    @PutMapping("/inventory/{itemId}")//To update price(Admin task)
     public ResponseEntity<String> updatePrice(@PathVariable Integer itemId, @RequestParam Double price) {
         Boolean isUpdated = inventoryService.updatePrice(itemId, price);
         if(isUpdated){
@@ -99,7 +99,7 @@ public class InventoryController {
         }
     }
 
-    @DeleteMapping("/inventory/{itemId}")
+    @DeleteMapping("/inventory/{itemId}")//To Delete an Item(Admin task)
     public ResponseEntity<String> deleteItem(@PathVariable Integer itemId) {
         Boolean isDeleted = inventoryService.deleteItem(itemId);
         if(isDeleted) {
