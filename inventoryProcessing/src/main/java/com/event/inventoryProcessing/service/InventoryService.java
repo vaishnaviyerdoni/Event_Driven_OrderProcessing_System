@@ -88,6 +88,23 @@ public class InventoryService {
         }
     }
 
+    //GET method - To get Price by ItemId
+    public Double getPricebyId(Integer itemId) {
+        try{
+            Double price = inventoryDAO.findPriceById(itemId);
+            if(price != null){
+                return price;
+            }
+            else{
+                throw new ItemNotFoundException("Price for this item could not be fetched");
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return 0.0D;
+        }
+    }
+
     //To check if inventory has enough stock
     public boolean isAvailable(int itemId) {
         try{
