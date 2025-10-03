@@ -1,7 +1,5 @@
 package com.event.paymentProcessing.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-
 import com.event.paymentProcessing.DTO.MakePayment;
 import com.event.paymentProcessing.DTO.PaymentResponse;
 import com.event.paymentProcessing.Exception.PaymentException;
@@ -10,10 +8,6 @@ import com.event.paymentProcessing.service.PaymentService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-
 
 @RequestMapping("/event")
 @RestController
@@ -26,7 +20,7 @@ public class PaymentController {
     }
 
     @GetMapping("/payment")
-    public ResponseEntity<List<Payment>> getAll(@RequestParam String param) throws PaymentException {
+    public ResponseEntity<List<Payment>> getAll() throws PaymentException {
         List<Payment> payment = service.getAll();
         if(payment != null) {
             return ResponseEntity.ok(payment);
