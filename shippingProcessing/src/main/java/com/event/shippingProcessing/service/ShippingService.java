@@ -80,4 +80,17 @@ public class ShippingService {
             return false;
         }
     }
+
+    //Delete - To delete a shipment info
+    public boolean deleteShipment(int shippingId) {
+        try{
+            Shipping shipping = shippingDAO.findById(shippingId);
+            shippingDAO.delete(shipping);
+            return true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
