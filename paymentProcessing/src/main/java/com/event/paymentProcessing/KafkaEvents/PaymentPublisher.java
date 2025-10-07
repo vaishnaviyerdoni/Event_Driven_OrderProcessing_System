@@ -1,8 +1,10 @@
 package com.event.paymentProcessing.KafkaEvents;
 
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
 import com.event.shared_events.dto.*;
 
+@Component
 public class PaymentPublisher {
     
     private KafkaTemplate<String, Object> kafkaTemp;

@@ -9,5 +9,5 @@ public interface PaymentDAO extends JpaRepository<Payment, Integer>{
     @SuppressWarnings("null")
     List<Payment> findAll();
 
-    Payment findById(int paymentId);
+    Payment findByPaymentId(int paymentId);
 }

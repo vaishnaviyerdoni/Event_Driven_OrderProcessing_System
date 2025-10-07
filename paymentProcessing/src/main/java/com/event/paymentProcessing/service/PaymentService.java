@@ -54,7 +54,7 @@ public class PaymentService {
     //GET request - To get the payment information by id
     public Payment getById(int paymentId) {
         try{
-            Payment payInfo = paymentDAO.findById(paymentId);
+            Payment payInfo = paymentDAO.findByPaymentId(paymentId);
             if(payInfo != null) {
                 return payInfo;
             }
@@ -71,7 +71,7 @@ public class PaymentService {
     //Update  request - To Update the OrderStatus
     public boolean updateStatus(int paymentId, String newStatus) {
         try{
-            Payment payInfo = paymentDAO.findById(paymentId);
+            Payment payInfo = paymentDAO.findByPaymentId(paymentId);
             payInfo.setOrderStatus(newStatus);
             paymentDAO.save(payInfo);
             return true;
@@ -85,7 +85,7 @@ public class PaymentService {
     //Delete request = To Delete payment info by id
     public boolean deletePayment(int paymentId) {
         try{
-            Payment pay = paymentDAO.findById(paymentId);
+            Payment pay = paymentDAO.findByPaymentId(paymentId);
             paymentDAO.delete(pay);
             return true;
         }
