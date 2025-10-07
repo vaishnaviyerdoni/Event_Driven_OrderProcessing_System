@@ -54,7 +54,7 @@ public class InventoryController {
         }
     }
     
-    @GetMapping("/inventory/{itemId}") //To get price of an item
+    @GetMapping("/inventory/{itemId}/price") //To get price of an item
     public Double getPrice(@PathVariable int itemId) throws ItemNotFoundException {
         Double price = inventoryService.getPricebyId(itemId);
         if(price != null) {
@@ -77,7 +77,7 @@ public class InventoryController {
         }
     }
     
-    @PutMapping("/inventory/{itemId}")//To update Item stock(Admin task)
+    @PutMapping("/inventory/{itemId}/stock")//To update Item stock(Admin task)
     public ResponseEntity<String> updateStock(@PathVariable Integer itemId, @RequestParam int quantity) {
         Boolean isUpdated = inventoryService.updateStock(itemId, quantity);
         if(isUpdated) {
@@ -88,7 +88,7 @@ public class InventoryController {
         }
     }
 
-    @PutMapping("/inventory/{itemId}")//To update price(Admin task)
+    @PutMapping("/inventory/{itemId}/price")//To update price(Admin task)
     public ResponseEntity<String> updatePrice(@PathVariable Integer itemId, @RequestParam Double price) {
         Boolean isUpdated = inventoryService.updatePrice(itemId, price);
         if(isUpdated){

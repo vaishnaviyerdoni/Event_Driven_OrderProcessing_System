@@ -57,7 +57,7 @@ public class InventoryService {
     //GET method - To get item by its Id
     public Inventory getItemById(int itemId) {
         try{
-            Inventory item = inventoryDAO.findById(itemId);
+            Inventory item = inventoryDAO.findByItemId(itemId);
             if(item != null) {
                 return item;
             }
@@ -91,7 +91,10 @@ public class InventoryService {
     //GET method - To get Price by ItemId
     public Double getPricebyId(Integer itemId) {
         try{
-            Double price = inventoryDAO.findPriceById(itemId);
+            Inventory item = inventoryDAO.findByItemId(itemId);
+
+            Double price = item.getPrice();
+
             if(price != null){
                 return price;
             }
@@ -108,7 +111,7 @@ public class InventoryService {
     //To check if inventory has enough stock
     public boolean isAvailable(int itemId) {
         try{
-            Inventory item = inventoryDAO.findById(itemId);
+            Inventory item = inventoryDAO.findByItemId(itemId);
             if(item.getQuantity() >  item.getLowStockThreshold()) {
                 return true;
             }
@@ -125,7 +128,7 @@ public class InventoryService {
     //Update method - To update the quantity of Item
     public boolean updateStock(int itemId, int newQuantity) {
         try{
-            Inventory item = inventoryDAO.findById(itemId);
+            Inventory item = inventoryDAO.findByItemId(itemId);
             
             if(!isAvailable(itemId)) {
                 item.setQuantity(newQuantity);
@@ -145,7 +148,7 @@ public class InventoryService {
     //Update method - To update Price of quantity
     public boolean updatePrice(int itemId, Double newPrice) {
         try{
-            Inventory item = inventoryDAO.findById(itemId);
+            Inventory item = inventoryDAO.findByItemId(itemId);
 
             item.setPrice(newPrice);
             inventoryDAO.save(item);
@@ -161,7 +164,7 @@ public class InventoryService {
     //DELETE method - To delete item from inventory
     public boolean deleteItem(int itemId) {
         try{
-            Inventory item = inventoryDAO.findById(itemId);
+            Inventory item = inventoryDAO.findByItemId(itemId);
             inventoryDAO.delete(item);
             return true;
         }

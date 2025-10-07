@@ -9,9 +9,7 @@ public interface InventoryDAO extends JpaRepository<Inventory, Integer>{
     @SuppressWarnings("null")
     List<Inventory> findAll(); // returns list of inventory items
 
-    Inventory findById(int itemId); // returns an inventory item by its id
+    Inventory findByItemId(int itemId); // returns an inventory item by its id
 
     List<Inventory> findByCategory(String category); //returns an items by their category
-
-    Double findPriceById(Integer itemId); //return item price by the item name
 }
