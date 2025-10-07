@@ -1,11 +1,13 @@
 package com.event.shippingProcessing.KafkaEvents;
 
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 import com.event.shared_events.dto.PaymentEvent;
 import com.event.shared_events.dto.ShippingDetails;
 import com.event.shippingProcessing.DTO.Shipment;
 import com.event.shippingProcessing.service.ShippingService;
 
+@Component
 public class ShippingListener {
     private final ShippingService service;
     private final ShippingPublisher publisher;
@@ -15,7 +17,7 @@ public class ShippingListener {
         this.publisher = publisher;
     }
 
-    @KafkaListener(topics = "${General.payment.kafka-topic}", groupId = "shippingProcessing")
+    @KafkaListener(topics = "${general.payment.kafka-topic}", groupId = "shippingProcessing")
     public void consumePayment(PaymentEvent event) {
 
         ShippingDetails details = new ShippingDetails();

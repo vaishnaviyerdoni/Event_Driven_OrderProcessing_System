@@ -53,7 +53,7 @@ public class ShippingService {
     //Get - To get shipping information by shippingId
     public Shipping getById(int shippingId) {
         try{
-            Shipping shipment = shippingDAO.findById(shippingId);
+            Shipping shipment = shippingDAO.findByShippingId(shippingId);
             if(shipment != null) {
                 return shipment;
             }
@@ -70,7 +70,7 @@ public class ShippingService {
     //Update - To update the orderstatus
     public boolean updateStatus(int shippingId, String orderStatus) {
         try{
-            Shipping shipping = shippingDAO.findById(shippingId);
+            Shipping shipping = shippingDAO.findByShippingId(shippingId);
             shipping.setOrderStatus(orderStatus);
             shippingDAO.save(shipping);
             return true;
@@ -84,7 +84,7 @@ public class ShippingService {
     //Delete - To delete a shipment info
     public boolean deleteShipment(int shippingId) {
         try{
-            Shipping shipping = shippingDAO.findById(shippingId);
+            Shipping shipping = shippingDAO.findByShippingId(shippingId);
             shippingDAO.delete(shipping);
             return true;
         }

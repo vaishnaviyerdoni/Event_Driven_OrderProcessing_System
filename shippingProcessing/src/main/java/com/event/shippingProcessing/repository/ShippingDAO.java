@@ -9,5 +9,5 @@ public interface ShippingDAO extends JpaRepository<Shipping, Integer>{
     @SuppressWarnings("null")
     List<Shipping> findAll();
 
-    Shipping findById(int shippingId);
+    Shipping findByShippingId(int shippingId);
 }
