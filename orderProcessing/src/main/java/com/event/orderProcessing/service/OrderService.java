@@ -77,7 +77,7 @@ public class OrderService {
     //GET method : To get Order by its Id
     public Order getById(int orderId) {
         try{
-            Order order = orderDAO.findById(orderId);
+            Order order = orderDAO.findByOrderId(orderId);
             if(order != null) {
                 return order;
             }
@@ -112,7 +112,9 @@ public class OrderService {
     public Double getPrice(int orderId) {
         Double price = 0.0d;
         try{
-            price = orderDAO.findPriceByOrderId(orderId);
+
+            Order order = orderDAO.findByOrderId(orderId);
+            price = order.getTotalAmount();
             if(price != null) {
                 return price;
             }
@@ -129,7 +131,7 @@ public class OrderService {
     //UPDATE method : To Update the orderStatus
     public boolean updateStatus(int orderId, String newOrderStatus) {
         try{
-            Order order = orderDAO.findById(orderId);
+            Order order = orderDAO.findByOrderId(orderId);
             order.setOrderStatus(newOrderStatus);
             orderDAO.save(order);
             return true;
@@ -142,7 +144,7 @@ public class OrderService {
     //DELETE method : To Delete an Order
     public boolean deleteOrder(int orderId) {
         try{
-            Order order = orderDAO.findById(orderId);
+            Order order = orderDAO.findByOrderId(orderId);
             orderDAO.delete(order);
             return true;
         }

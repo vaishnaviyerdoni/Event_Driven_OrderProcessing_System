@@ -49,7 +49,7 @@ public class OrderController {
         }
     }
     
-    @GetMapping("/orders")//To get Orders by their Statuses(Admin task)
+    @GetMapping("/orders/status")//To get Orders by their Statuses(Admin task)
     public ResponseEntity<List<Order>> getByStatus(@RequestParam String orderStatus) throws OrderNotFoundException {
         List<Order> orders = service.getOrderbyStatus(orderStatus);
         if(orders.isEmpty()){
@@ -60,7 +60,7 @@ public class OrderController {
         }
     }
     
-    @GetMapping("/orders/orderId")//To get Order Price
+    @GetMapping("/orders/{orderId}/price")//To get Order Price
     public ResponseEntity<Double> getPrice(@PathVariable int orderId) throws OrderNotFoundException{
         Double price = service.getPrice(orderId);
         if(price > 0){
@@ -83,7 +83,7 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/orders/{orderId}")//To update Order status(Admin Task)
+    @PutMapping("/orders/{orderId}/status")//To update Order status(Admin Task)
     public ResponseEntity<String> updateStatus(@PathVariable int orderId, @RequestParam String orderStatus) {
        Boolean isUpdated = service.updateStatus(orderId, orderStatus);
        if(isUpdated){

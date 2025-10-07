@@ -13,7 +13,7 @@ public class OrderItemEntity {
     private Integer id;
 
     @JoinColumn(name="orderId", nullable = false)
-    @ManyToMany
+    @ManyToOne
     private Order order;
 
     @Column(name = "itemId", nullable = false)

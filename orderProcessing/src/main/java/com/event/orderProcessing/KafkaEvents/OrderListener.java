@@ -14,7 +14,7 @@ public class OrderListener { //Listens to ShippingPublisher
         this.service = service;
     }
 
-    @KafkaListener(topics = "${General.shipping.kafka-topics}", groupId = "orderProcessing")
+    @KafkaListener(topics = "${general.shipping.kafka-topic}", groupId = "orderProcessing")
     public void consumeShipping(ShippingDetails details) {
         if("OrderShipped".equals(details.getOrderStatus())){
             boolean isUpdated = service.updateStatus(details.getOrderId(), details.getOrderStatus());
