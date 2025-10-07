@@ -1,0 +1,94 @@
+services:
+  # ZOOKEEPER
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  # KAFKA
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka-broker
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+
+  # ---------- SPRING SERVICES ----------
+
+  inventory:
+    build:
+      context: .                                
+      dockerfile: inventoryProcessing/Dockerfile
+    container_name: inventoryProcessingApp
+    depends_on:
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/inventorydb
+      SPRING_DATASOURCE_USERNAME: ${MY_SQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${MY_SQL_PASSWORD}
+    ports:
+      - "8081:8080"
+    volumes:
+      - ~/.m2:/root/.m2
+
+  order:
+    build:
+      context: .                                
+      dockerfile: orderProcessing/Dockerfile
+    container_name: orderProcessingApp
+    depends_on:
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/orderdb
+      SPRING_DATASOURCE_USERNAME: ${MY_SQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${MY_SQL_PASSWORD}
+    ports:
+      - "8082:8080"
+    volumes:
+      - ~/.m2:/root/.m2
+
+  payment:
+    build:
+      context: .                                
+      dockerfile: paymentProcessing/Dockerfile
+    container_name: paymentProcessingApp
+    depends_on:
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/paymentdb
+      SPRING_DATASOURCE_USERNAME: ${MY_SQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${MY_SQL_PASSWORD}
+    ports:
+      - "8083:8080"
+    volumes:
+      - ~/.m2:/root/.m2
+
+  shipping:
+    build:
+      context: .                              
+      dockerfile: shippingProcessing/Dockerfile
+    container_name: shippingProcessingApp
+    depends_on:
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/shippingdb
+      SPRING_DATASOURCE_USERNAME: ${MY_SQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${MY_SQL_PASSWORD}
+    ports:
+      - "8084:8080"
+    volumes:
+      - ~/.m2:/root/.m2
+
+# VOLUMES
+volumes:
+  mysql-data:
